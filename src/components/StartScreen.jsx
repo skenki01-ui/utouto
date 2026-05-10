@@ -16,9 +16,26 @@ export default function StartScreen({
         </div>
 
         <div className="message sub">
-          大きく息を吸って、
+          通知を閉じて、
           <br />
-          ゆっくり全部吐いたら始めよう
+          少しだけ目を休めよう
+        </div>
+
+        <div
+          style={{
+            fontSize: "12px",
+
+            lineHeight: 1.8,
+
+            color:
+              "rgba(255,255,255,0.38)",
+
+            marginBottom: "34px",
+          }}
+        >
+          画面を少し遠ざけて、
+          <br />
+          深呼吸したら始めよう
         </div>
 
         <button

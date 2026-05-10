@@ -15,7 +15,7 @@ const modeList = [
     icon: "🌙",
 
     description:
-      "月と雲を眺める静かな夜",
+      "雲の向こうが少し明るい",
 
     component: Yorugumo,
 
@@ -32,7 +32,7 @@ const modeList = [
     icon: "☔",
 
     description:
-      "雨粒とにじむ街灯の夜",
+      "街の音が雨に混ざってる",
 
     component: RainNight,
 
@@ -49,7 +49,7 @@ const modeList = [
     icon: "❄️",
 
     description:
-      "静かに積もる雪を眺める夜",
+      "音が遠くなった気がする",
 
     component: SnowNight,
 
@@ -66,7 +66,7 @@ const modeList = [
     icon: "🔥",
 
     description:
-      "小さな火をぼーっと眺める夜",
+      "火だけ見ていたくなる",
 
     component: Takibi,
 
@@ -83,7 +83,7 @@ const modeList = [
     icon: "🌊",
 
     description:
-      "深い海の底へ沈んでいく感覚",
+      "少しだけ耳が静かになる",
 
     component: DeepSea,
 
@@ -100,7 +100,7 @@ const modeList = [
     icon: "🚆",
 
     description:
-      "流れる灯りと眠たい移動",
+      "眠ったまま運ばれていく",
 
     component: NightTrain,
 
@@ -117,7 +117,7 @@ const modeList = [
     icon: "🏭",
 
     description:
-      "海辺から眺める静かな工場",
+      "遠くで機械の音がしてる",
 
     component: FactoryNight,
 

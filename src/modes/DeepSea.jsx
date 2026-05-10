@@ -15,6 +15,11 @@ export default function DeepSea() {
         <div className="bubble bubble1" />
         <div className="bubble bubble2" />
         <div className="bubble bubble3" />
+
+        <div className="particle particle1" />
+        <div className="particle particle2" />
+        <div className="particle particle3" />
+        <div className="particle particle4" />
       </div>
     </div>
   );

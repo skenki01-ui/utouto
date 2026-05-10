@@ -11,6 +11,9 @@
       rgba(8, 24, 42, 0.9) 45%,
       #020711 100%
     );
+
+  animation:
+    deepFloat 18s ease-in-out infinite;
 }
 
 .deepGlow {
@@ -70,37 +73,46 @@
 
 .ray2 {
   left: 58%;
+
   animation-duration: 24s;
+
   opacity: 0.28;
 }
 
-/* 遠くを横切る影 */
+/* 遠くを横切る魚影 */
 
 .deepShadow {
   position: absolute;
 
-  width: 180px;
-  height: 42px;
+  width: 220px;
+  height: 38px;
 
-  border-radius: 50%;
+  border-radius:
+    60% 40% 45% 55% /
+    50% 50% 50% 50%;
 
   background:
-    radial-gradient(
-      ellipse at center,
-      rgba(0, 8, 18, 0.42) 0%,
-      rgba(0, 8, 18, 0.22) 55%,
+    linear-gradient(
+      to right,
+      rgba(0, 8, 18, 0) 0%,
+      rgba(0, 8, 18, 0.12) 18%,
+      rgba(0, 8, 18, 0.42) 42%,
+      rgba(0, 8, 18, 0.22) 72%,
       rgba(0, 8, 18, 0) 100%
     );
 
-  filter: blur(8px);
+  filter: blur(10px);
 
   opacity: 0;
 
-  animation: shadowDrift linear infinite;
+  transform-origin: center;
+
+  animation:
+    shadowDrift linear infinite;
 }
 
 .shadow1 {
-  top: 42%;
+  top: 38%;
   left: -240px;
 
   animation-duration: 52s;
@@ -108,16 +120,14 @@
 }
 
 .shadow2 {
-  top: 62%;
+  top: 58%;
   left: -320px;
 
-  width: 240px;
-  height: 54px;
+  width: 260px;
+  height: 48px;
 
   animation-duration: 78s;
   animation-delay: 22s;
-
-  opacity: 0;
 }
 
 /* たまに上がる泡 */
@@ -167,7 +177,89 @@
   animation-delay: 30s;
 }
 
+/* 前景の浮遊粒子 */
+
+.particle {
+  position: absolute;
+
+  border-radius: 50%;
+
+  background:
+    rgba(180, 230, 255, 0.08);
+
+  filter: blur(2px);
+
+  opacity: 0;
+
+  animation:
+    particleFloat linear infinite;
+}
+
+.particle1 {
+  width: 3px;
+  height: 3px;
+
+  left: 18%;
+  top: 72%;
+
+  animation-duration: 24s;
+  animation-delay: 2s;
+}
+
+.particle2 {
+  width: 2px;
+  height: 2px;
+
+  left: 64%;
+  top: 82%;
+
+  animation-duration: 32s;
+  animation-delay: 8s;
+}
+
+.particle3 {
+  width: 4px;
+  height: 4px;
+
+  left: 78%;
+  top: 68%;
+
+  animation-duration: 28s;
+  animation-delay: 14s;
+}
+
+.particle4 {
+  width: 2px;
+  height: 2px;
+
+  left: 36%;
+  top: 88%;
+
+  animation-duration: 36s;
+  animation-delay: 20s;
+}
+
 /* アニメ */
+
+@keyframes deepFloat {
+  0% {
+    transform:
+      translateY(0px)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(-6px)
+      scale(1.015);
+  }
+
+  100% {
+    transform:
+      translateY(0px)
+      scale(1);
+  }
+}
 
 @keyframes deepPulse {
   0% {
@@ -207,11 +299,11 @@
   }
 
   12% {
-    opacity: 0.22;
+    opacity: 0.24;
   }
 
   45% {
-    opacity: 0.18;
+    opacity: 0.2;
   }
 
   70% {
@@ -240,6 +332,32 @@
 
   100% {
     transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform:
+      translateY(0px)
+      translateX(0px);
+
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.16;
+  }
+
+  60% {
+    opacity: 0.09;
+  }
+
+  100% {
+    transform:
+      translateY(-140px)
+      translateX(18px);
+
     opacity: 0;
   }
 }
