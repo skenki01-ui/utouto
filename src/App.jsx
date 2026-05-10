@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import "./index.css";
 import "./App.css";
 
+import MenuModal from "./components/MenuModal.jsx";
+import SoundButton from "./components/SoundButton.jsx";
 import StartScreen from "./components/StartScreen.jsx";
 
 import modeList from "./data/modeList.js";
@@ -12,13 +14,19 @@ import createModeSound from "./sounds/createModeSound.js";
 export default function App() {
 
   const [mode, setMode] =
-    useState("deep");
+    useState("yorugumo");
 
   const [started, setStarted] =
     useState(false);
 
+  const [menuOpen, setMenuOpen] =
+    useState(false);
+
   const [soundOn, setSoundOn] =
-    useState(true);
+    useState(false);
+
+  const [audioInstance, setAudioInstance] =
+    useState(null);
 
   const [sleepTimer, setSleepTimer] =
     useState(0);
@@ -44,19 +52,22 @@ export default function App() {
 
   useEffect(() => {
 
-    let audio;
+    if (!soundOn) {
+      return;
+    }
 
-    if (
-      started &&
-      soundOn &&
-      currentMode?.sound
-    ) {
+    if (audioInstance?.fadeOut) {
 
-      audio = createModeSound(
+      audioInstance.fadeOut();
+
+    }
+
+    const audio =
+      createModeSound(
         currentMode.sound
       );
 
-    }
+    setAudioInstance(audio);
 
     return () => {
 
@@ -68,40 +79,44 @@ export default function App() {
 
     };
 
-  }, [
-    started,
-    soundOn,
-    currentMode
-  ]);
+  }, [mode]);
 
   useEffect(() => {
 
     if (
-      !started ||
       !soundOn ||
       sleepTimer === 0
     ) {
       return;
     }
 
-    const timer = setTimeout(() => {
+    const timer =
+      setTimeout(() => {
 
-      setSoundOn(false);
+        if (
+          audioInstance?.fadeOut
+        ) {
 
-    }, sleepTimer);
+          audioInstance.fadeOut();
+
+        }
+
+        setAudioInstance(null);
+
+        setSoundOn(false);
+
+      }, sleepTimer);
 
     return () =>
       clearTimeout(timer);
 
   }, [
-    started,
     soundOn,
-    sleepTimer
+    sleepTimer,
+    audioInstance,
   ]);
 
   useEffect(() => {
-
-    if (!started) return;
 
     setVisible(false);
 
@@ -129,7 +144,7 @@ export default function App() {
 
     };
 
-  }, [mode, started]);
+  }, [mode]);
 
   return (
     <div className="app">
@@ -140,7 +155,36 @@ export default function App() {
           mode={mode}
           setMode={setMode}
           soundOn={soundOn}
-          setSoundOn={setSoundOn}
+          setSoundOn={(next) => {
+
+            if (!soundOn) {
+
+              const audio =
+                createModeSound(
+                  currentMode.sound
+                );
+
+              setAudioInstance(audio);
+
+              setSoundOn(true);
+
+            } else {
+
+              if (
+                audioInstance?.fadeOut
+              ) {
+
+                audioInstance.fadeOut();
+
+              }
+
+              setAudioInstance(null);
+
+              setSoundOn(false);
+
+            }
+
+          }}
           sleepTimer={sleepTimer}
           setSleepTimer={setSleepTimer}
           setStarted={setStarted}
@@ -179,6 +223,61 @@ export default function App() {
             </div>
 
           </div>
+
+          <button
+            onClick={() => {
+              setMenuOpen(true);
+            }}
+            className="menuButton"
+          >
+            ☰
+          </button>
+
+          <SoundButton
+            soundOn={soundOn}
+            setSoundOn={(next) => {
+
+              if (!soundOn) {
+
+                const audio =
+                  createModeSound(
+                    currentMode.sound
+                  );
+
+                setAudioInstance(audio);
+
+                setSoundOn(true);
+
+              } else {
+
+                if (
+                  audioInstance?.fadeOut
+                ) {
+
+                  audioInstance.fadeOut();
+
+                }
+
+                setAudioInstance(null);
+
+                setSoundOn(false);
+
+              }
+
+            }}
+          />
+
+          {menuOpen && (
+
+            <MenuModal
+              mode={mode}
+              setMode={setMode}
+              setMenuOpen={setMenuOpen}
+              sleepTimer={sleepTimer}
+              setSleepTimer={setSleepTimer}
+            />
+
+          )}
 
         </>
 
