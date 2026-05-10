@@ -1,92 +1,125 @@
-.app {
-  width: 100%;
-  height: 100%;
-
-  position: relative;
-
-  background: #050816;
+* {
+  box-sizing: border-box;
 }
 
-/* スタート画面 */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
 
-.startScreen {
   width: 100%;
   height: 100%;
+
+  overflow: hidden;
+
+  background: #050811;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    sans-serif;
+}
+
+body {
+  color: white;
+}
+
+button {
+  font-family: inherit;
+}
+
+.app {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  background: #050811;
+}
+
+/* ---------- START ---------- */
+
+.startScreen {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
 
   background:
     radial-gradient(
       circle at center,
-      #182645 0%,
-      #0a1020 50%,
-      #04060d 100%
+      rgba(22, 28, 46, 0.9),
+      rgba(4, 7, 12, 1)
     );
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  color: white;
-
-  position: relative;
+  z-index: 50;
 }
 
 .startInner {
-  width: 100%;
-  max-width: 320px;
-
-  padding: 32px;
-
   text-align: center;
 }
 
 .title {
-  font-size: 34px;
-  font-weight: 300;
-
-  margin-bottom: 42px;
+  font-size: 42px;
+  font-weight: 600;
 
   letter-spacing: 2px;
 
-  opacity: 0.92;
+  margin-bottom: 28px;
 }
 
 .message {
-  font-size: 18px;
+  font-size: 17px;
+
   line-height: 1.8;
 
-  opacity: 0.82;
+  color: rgba(255,255,255,0.92);
 
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
-.sub {
-  font-size: 15px;
+.message.sub {
+  font-size: 14px;
 
-  opacity: 0.58;
+  color: rgba(255,255,255,0.58);
 
-  margin-bottom: 42px;
+  margin-bottom: 34px;
 }
 
 .startButton {
   border: none;
-  outline: none;
-
-  background: rgba(255,255,255,0.08);
-
-  color: rgba(255,255,255,0.92);
 
   padding: 16px 34px;
 
   border-radius: 999px;
+
+  background: rgba(255,255,255,0.12);
+
+  color: white;
 
   font-size: 16px;
 
   backdrop-filter: blur(10px);
 
   cursor: pointer;
+
+  transition: 0.25s;
 }
 
-/* メニュー */
+.startButton:active {
+  transform: scale(0.96);
+}
+
+/* ---------- MENU BUTTON ---------- */
 
 .menuButton {
   position: absolute;
@@ -94,70 +127,90 @@
   top: 18px;
   right: 18px;
 
-  z-index: 100;
+  width: 44px;
+  height: 44px;
 
   border: none;
+  border-radius: 50%;
 
   background: rgba(255,255,255,0.08);
 
   color: white;
 
-  width: 42px;
-  height: 42px;
-
-  border-radius: 999px;
-
   font-size: 18px;
+
+  backdrop-filter: blur(10px);
+
+  z-index: 100;
 
   cursor: pointer;
 }
 
-/* モーダル */
+/* ---------- MODAL ---------- */
 
 .modalOverlay {
-  position: fixed;
+  position: absolute;
+
   inset: 0;
 
-  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  backdrop-filter: blur(10px);
+  padding: 20px;
+
+  background: rgba(0,0,0,0.42);
 
   z-index: 200;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .menuModal {
-  width: calc(100% - 32px);
-  max-width: 340px;
+  position: relative;
 
-  background: rgba(15,20,35,0.92);
+  width: 88%;
+  max-width: 420px;
+
+  max-height: 80vh;
+
+  overflow-y: auto;
+
+  padding: 24px;
+  padding-bottom: 40px;
 
   border-radius: 24px;
 
-  padding: 24px;
+  background: rgba(10, 14, 24, 0.94);
+
+  backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.45);
 
   color: white;
 }
 
-.menuTitle {
-  font-size: 20px;
+/* スクロールバー軽く消す */
 
-  margin-bottom: 22px;
-
-  opacity: 0.9;
+.menuModal::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
+
+.menuTitle {
+  font-size: 18px;
+  font-weight: 600;
+
+  margin-bottom: 20px;
+
+  opacity: 0.92;
+}
+
+/* ---------- MODE BUTTON ---------- */
 
 .modeButton {
   width: 100%;
 
   border: none;
-
-  background: rgba(255,255,255,0.06);
-
-  color: white;
 
   border-radius: 18px;
 
@@ -165,9 +218,19 @@
 
   margin-bottom: 14px;
 
+  background: rgba(255,255,255,0.06);
+
+  color: white;
+
   text-align: left;
 
   cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.modeButton:active {
+  transform: scale(0.985);
 }
 
 .modeButton span {
@@ -179,35 +242,59 @@
 }
 
 .modeButton small {
-  opacity: 0.55;
+  color: rgba(255,255,255,0.52);
+
+  font-size: 12px;
+
+  line-height: 1.5;
 }
 
 .modeButton.active {
   background: rgba(255,255,255,0.14);
 }
 
+/* ---------- NOTE ---------- */
+
 .menuNote {
-  font-size: 13px;
+  margin-top: 18px;
 
-  opacity: 0.45;
+  font-size: 12px;
 
-  margin-top: 12px;
+  line-height: 1.7;
+
+  text-align: center;
+
+  color: rgba(255,255,255,0.4);
 }
+
+/* ---------- CLOSE ---------- */
 
 .closeButton {
   width: 100%;
 
+  margin-top: 22px;
+
   border: none;
-
-  background: rgba(255,255,255,0.08);
-
-  color: white;
 
   border-radius: 999px;
 
   padding: 14px;
 
-  margin-top: 24px;
+  background: rgba(255,255,255,0.08);
+
+  color: rgba(255,255,255,0.82);
+
+  font-size: 14px;
 
   cursor: pointer;
+}
+
+/* ---------- WINDOW ---------- */
+
+.window {
+  position: absolute;
+
+  inset: 0;
+
+  overflow: hidden;
 }
