@@ -11,6 +11,7 @@ export default function MenuModal({
   setSleepTimer,
   setStarted,
   setMenuOpen,
+  sleepNow,
 }) {
 
   return (
@@ -35,44 +36,6 @@ export default function MenuModal({
         <div className="menuSection">
 
           <div className="menuLabel">
-            夜を選ぶ
-          </div>
-
-          <div className="modeRow">
-
-            {modeList.map((item) => (
-
-              <button
-                key={item.id}
-                className={
-                  mode === item.id
-                    ? "modeMini active"
-                    : "modeMini"
-                }
-                onClick={() => {
-                  setMode(item.id);
-                }}
-              >
-
-                <div className="modeMiniIcon">
-                  {item.icon}
-                </div>
-
-                <div className="modeMiniName">
-                  {item.name}
-                </div>
-
-              </button>
-
-            ))}
-
-          </div>
-
-        </div>
-
-        <div className="menuSection">
-
-          <div className="menuLabel">
             音
           </div>
 
@@ -80,7 +43,7 @@ export default function MenuModal({
             className="menuButtonLarge"
             onClick={() => {
 
-              setSoundOn(!soundOn);
+              setSoundOn();
 
             }}
           >
@@ -129,8 +92,59 @@ export default function MenuModal({
 
         </div>
 
+        <div className="menuSection">
+
+          <div className="menuLabel">
+            夜を選ぶ
+          </div>
+
+          <div className="modeRow">
+
+            {modeList.map((item) => (
+
+              <button
+                key={item.id}
+                className={
+                  mode === item.id
+                    ? "modeMini active"
+                    : "modeMini"
+                }
+                onClick={() => {
+
+                  setMode(item.id);
+
+                }}
+              >
+
+                <div className="modeMiniIcon">
+                  {item.icon}
+                </div>
+
+                <div className="modeMiniName">
+                  {item.name}
+                </div>
+
+              </button>
+
+            ))}
+
+          </div>
+
+        </div>
+
         <button
           className="sleepButton"
+          onClick={() => {
+
+            sleepNow();
+
+          }}
+        >
+          おやすみする
+        </button>
+
+        <button
+          className="homeButton"
           onClick={() => {
 
             setStarted(false);
@@ -139,7 +153,7 @@ export default function MenuModal({
 
           }}
         >
-          おやすみする
+          ホームへ戻る
         </button>
 
       </div>

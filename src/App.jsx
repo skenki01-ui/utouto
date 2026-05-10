@@ -43,6 +43,9 @@ export default function App() {
   const [showControls, setShowControls] =
     useState(true);
 
+  const [sleepScreen, setSleepScreen] =
+    useState(false);
+
   const currentMode = useMemo(() => {
 
     return (
@@ -99,7 +102,7 @@ export default function App() {
 
   }
 
-  /* ---------- mode change ---------- */
+  /* ---------- mode ---------- */
 
   useEffect(() => {
 
@@ -157,7 +160,7 @@ export default function App() {
     audioInstance,
   ]);
 
-  /* ---------- mode label ---------- */
+  /* ---------- label ---------- */
 
   useEffect(() => {
 
@@ -191,7 +194,7 @@ export default function App() {
 
   }, [mode, started]);
 
-  /* ---------- auto hide ui ---------- */
+  /* ---------- auto hide ---------- */
 
   useEffect(() => {
 
@@ -224,6 +227,26 @@ export default function App() {
 
     return () =>
       clearTimeout(timer);
+
+  }
+
+  /* ---------- sleep ---------- */
+
+  function sleepNow() {
+
+    stopAudio();
+
+    setMenuOpen(false);
+
+    setSleepScreen(true);
+
+    setTimeout(() => {
+
+      setStarted(false);
+
+      setSleepScreen(false);
+
+    }, 1800);
 
   }
 
@@ -289,7 +312,7 @@ export default function App() {
 
           </div>
 
-          {/* ---------- top buttons ---------- */}
+          {/* ---------- menu button ---------- */}
 
           <div
             style={{
@@ -297,9 +320,6 @@ export default function App() {
 
               top: 20,
               right: 20,
-
-              display: "flex",
-              gap: "10px",
 
               zIndex: 50,
 
@@ -317,21 +337,6 @@ export default function App() {
                   : "none",
             }}
           >
-
-            <button
-              className="menuButton"
-              onClick={(e) => {
-
-                e.stopPropagation();
-
-                toggleSound();
-
-              }}
-            >
-              {soundOn
-                ? "♫"
-                : "◯"}
-            </button>
 
             <button
               className="menuButton"
@@ -361,7 +366,42 @@ export default function App() {
               setSleepTimer={setSleepTimer}
               setStarted={setStarted}
               setMenuOpen={setMenuOpen}
+              sleepNow={sleepNow}
             />
+
+          )}
+
+          {/* ---------- sleep ---------- */}
+
+          {sleepScreen && (
+
+            <div
+              style={{
+                position: "absolute",
+
+                inset: 0,
+
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+
+                background: "black",
+
+                color:
+                  "rgba(255,255,255,0.72)",
+
+                fontSize: "22px",
+
+                letterSpacing: "0.12em",
+
+                zIndex: 200,
+
+                animation:
+                  "sleepFade 1.8s ease",
+              }}
+            >
+              おやすみ
+            </div>
 
           )}
 
@@ -371,4 +411,5 @@ export default function App() {
 
     </div>
   );
+
 }
