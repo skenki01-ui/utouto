@@ -1,0 +1,167 @@
+.nightTrain {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #0a1220 0%,
+      #050811 100%
+    );
+
+  animation: trainSway 7s ease-in-out infinite;
+}
+
+/* 流れる外灯 */
+
+.trainLight {
+  position: absolute;
+
+  width: 220px;
+  height: 10px;
+
+  border-radius: 999px;
+
+  filter: blur(12px);
+
+  opacity: 0;
+
+  animation: trainFlow linear infinite;
+}
+
+.light1 {
+  top: 22%;
+
+  background: rgba(255,220,150,0.65);
+
+  animation-duration: 8s;
+}
+
+.light2 {
+  top: 38%;
+
+  background: rgba(120,170,255,0.42);
+
+  animation-duration: 12s;
+
+  animation-delay: 2s;
+}
+
+.light3 {
+  top: 58%;
+
+  background: rgba(255,180,120,0.55);
+
+  animation-duration: 10s;
+
+  animation-delay: 4s;
+}
+
+.light4 {
+  top: 76%;
+
+  background: rgba(180,220,255,0.38);
+
+  animation-duration: 14s;
+
+  animation-delay: 6s;
+}
+
+/* 窓反射 */
+
+.windowReflection {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to right,
+      rgba(255,255,255,0.03),
+      rgba(255,255,255,0.08),
+      rgba(255,255,255,0.02)
+    );
+
+  opacity: 0.35;
+
+  backdrop-filter: blur(2px);
+}
+
+/* 窓枠 */
+
+.trainFrameLeft,
+.trainFrameRight {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  width: 18px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(18,24,35,0.95),
+      rgba(8,10,16,1)
+    );
+
+  z-index: 5;
+}
+
+.trainFrameLeft {
+  left: 0;
+}
+
+.trainFrameRight {
+  right: 0;
+}
+
+/* アニメ */
+
+@keyframes trainFlow {
+
+  0% {
+    transform: translateX(120vw);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.7;
+  }
+
+  55% {
+    opacity: 0.45;
+  }
+
+  100% {
+    transform: translateX(-140vw);
+    opacity: 0;
+  }
+}
+
+@keyframes trainSway {
+
+  0% {
+    transform: translateX(0px);
+  }
+
+  25% {
+    transform: translateX(1px);
+  }
+
+  50% {
+    transform: translateX(0px);
+  }
+
+  75% {
+    transform: translateX(-1px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}

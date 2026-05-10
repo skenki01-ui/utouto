@@ -1,0 +1,144 @@
+.rainNightSky {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #121826 0%,
+      #0b1020 100%
+    );
+}
+
+/* 光 */
+
+.light {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(40px);
+
+  opacity: 0.5;
+
+  animation: pulseLight 8s ease-in-out infinite;
+}
+
+.redLight {
+  width: 180px;
+  height: 180px;
+
+  background: rgba(255, 60, 60, 0.6);
+
+  left: 12%;
+  top: 25%;
+}
+
+.yellowLight {
+  width: 220px;
+  height: 220px;
+
+  background: rgba(255, 210, 90, 0.45);
+
+  right: 10%;
+  top: 40%;
+}
+
+.blueLight {
+  width: 260px;
+  height: 260px;
+
+  background: rgba(80, 140, 255, 0.35);
+
+  left: 40%;
+  top: 12%;
+}
+
+/* 雫 */
+
+.glass {
+  position: absolute;
+
+  width: 5px;
+  height: 220px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0),
+      rgba(255,255,255,0.35),
+      rgba(255,255,255,0)
+    );
+
+  filter: blur(1px);
+
+  opacity: 0;
+
+  animation: glassFlow linear infinite;
+}
+
+.glass1 {
+  left: 12%;
+  animation-duration: 12s;
+}
+
+.glass2 {
+  left: 28%;
+  animation-duration: 16s;
+}
+
+.glass3 {
+  left: 46%;
+  animation-duration: 10s;
+}
+
+.glass4 {
+  left: 68%;
+  animation-duration: 18s;
+}
+
+.glass5 {
+  left: 84%;
+  animation-duration: 14s;
+}
+
+@keyframes glassFlow {
+
+  0% {
+    transform: translateY(-30%);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: translateY(140vh);
+    opacity: 0;
+  }
+}
+
+@keyframes pulseLight {
+
+  0% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+}
