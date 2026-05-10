@@ -1,6 +1,6 @@
 import "./StartScreen.css";
 
-import modeList from "../data/modeList";
+import modeList from "../data/modeList.js";
 
 export default function StartScreen({
   mode,
@@ -12,51 +12,87 @@ export default function StartScreen({
   setStarted,
 }) {
 
+  const currentIndex =
+    modeList.findIndex(
+      (m) => m.id === mode
+    );
+
+  const currentMode =
+    modeList[currentIndex];
+
+  function prevMode() {
+
+    const next =
+      currentIndex <= 0
+        ? modeList.length - 1
+        : currentIndex - 1;
+
+    setMode(modeList[next].id);
+
+  }
+
+  function nextMode() {
+
+    const next =
+      currentIndex >=
+      modeList.length - 1
+        ? 0
+        : currentIndex + 1;
+
+    setMode(modeList[next].id);
+
+  }
+
   return (
     <div className="startScreen">
 
-      <div className="startOverlay" />
-
       <div className="startInner">
 
-        <div className="logo">
-          うとうと
+        <div className="startLogo">
+
+          <div className="startTitle">
+            うとうと
+          </div>
+
+          <div className="startSub">
+            少しだけ静かな場所へ
+          </div>
+
         </div>
 
-        <div className="subText">
-          少しだけ
-          静かな場所へ
+        <div className="heroCard">
+
+          <div className="heroGlow" />
+
+          <div className="heroIcon">
+            {currentMode.icon}
+          </div>
+
+          <div className="heroName">
+            {currentMode.name}
+          </div>
+
+          <div className="heroDescription">
+            {currentMode.description}
+          </div>
+
         </div>
 
-        <div className="modeGrid">
+        <div className="switchArea">
 
-          {modeList.map((item) => (
+          <button
+            className="switchButton"
+            onClick={prevMode}
+          >
+            ◀
+          </button>
 
-            <button
-              key={item.id}
-              className={
-                mode === item.id
-                  ? "modeCard active"
-                  : "modeCard"
-              }
-              onClick={() => setMode(item.id)}
-            >
-
-              <div className="modeIcon">
-                {item.icon}
-              </div>
-
-              <div className="modeName">
-                {item.name}
-              </div>
-
-              <div className="modeDescription">
-                {item.description}
-              </div>
-
-            </button>
-
-          ))}
+          <button
+            className="switchButton"
+            onClick={nextMode}
+          >
+            ▶
+          </button>
 
         </div>
 
@@ -64,27 +100,30 @@ export default function StartScreen({
 
           <button
             className="settingButton"
-            onClick={() =>
-              setSoundOn(!soundOn)
-            }
+            onClick={() => {
+              setSoundOn(!soundOn);
+            }}
           >
             {soundOn
               ? "音を流している"
-              : "音を止めている"}
+              : "音を流す"}
           </button>
 
           <select
             className="timerSelect"
             value={sleepTimer}
-            onChange={(e) =>
+            onChange={(e) => {
               setSleepTimer(
                 Number(e.target.value)
-              )
-            }
+              );
+            }}
           >
-
             <option value={0}>
               タイマーなし
+            </option>
+
+            <option value={300000}>
+              5分
             </option>
 
             <option value={900000}>
@@ -95,19 +134,15 @@ export default function StartScreen({
               30分
             </option>
 
-            <option value={3600000}>
-              1時間
-            </option>
-
           </select>
 
         </div>
 
         <button
           className="startButton"
-          onClick={() =>
-            setStarted(true)
-          }
+          onClick={() => {
+            setStarted(true);
+          }}
         >
           はじめる
         </button>
