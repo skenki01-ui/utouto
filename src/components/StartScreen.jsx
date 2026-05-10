@@ -1,53 +1,119 @@
+import "./StartScreen.css";
+
+import modeList from "../data/modeList";
+
 export default function StartScreen({
+  mode,
+  setMode,
+  soundOn,
+  setSoundOn,
+  sleepTimer,
+  setSleepTimer,
   setStarted,
 }) {
 
   return (
     <div className="startScreen">
 
+      <div className="startOverlay" />
+
       <div className="startInner">
 
-        <div className="title">
-          🌙 うとうと
+        <div className="logo">
+          うとうと
         </div>
 
-        <div className="message">
-          部屋、暗くした？
+        <div className="subText">
+          少しだけ
+          静かな場所へ
         </div>
 
-        <div className="message sub">
-          通知を閉じて、
-          <br />
-          少しだけ目を休めよう
+        <div className="modeGrid">
+
+          {modeList.map((item) => (
+
+            <button
+              key={item.id}
+              className={
+                mode === item.id
+                  ? "modeCard active"
+                  : "modeCard"
+              }
+              onClick={() => setMode(item.id)}
+            >
+
+              <div className="modeIcon">
+                {item.icon}
+              </div>
+
+              <div className="modeName">
+                {item.name}
+              </div>
+
+              <div className="modeDescription">
+                {item.description}
+              </div>
+
+            </button>
+
+          ))}
+
         </div>
 
-        <div
-          style={{
-            fontSize: "12px",
+        <div className="settingArea">
 
-            lineHeight: 1.8,
+          <button
+            className="settingButton"
+            onClick={() =>
+              setSoundOn(!soundOn)
+            }
+          >
+            {soundOn
+              ? "音を流している"
+              : "音を止めている"}
+          </button>
 
-            color:
-              "rgba(255,255,255,0.38)",
+          <select
+            className="timerSelect"
+            value={sleepTimer}
+            onChange={(e) =>
+              setSleepTimer(
+                Number(e.target.value)
+              )
+            }
+          >
 
-            marginBottom: "34px",
-          }}
-        >
-          画面を少し遠ざけて、
-          <br />
-          深呼吸したら始めよう
+            <option value={0}>
+              タイマーなし
+            </option>
+
+            <option value={900000}>
+              15分
+            </option>
+
+            <option value={1800000}>
+              30分
+            </option>
+
+            <option value={3600000}>
+              1時間
+            </option>
+
+          </select>
+
         </div>
 
         <button
           className="startButton"
-          onClick={() => setStarted(true)}
+          onClick={() =>
+            setStarted(true)
+          }
         >
-          うとうとする
+          はじめる
         </button>
 
       </div>
 
     </div>
   );
-
 }

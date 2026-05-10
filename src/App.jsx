@@ -3,8 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import "./index.css";
 import "./App.css";
 
-import MenuModal from "./components/MenuModal.jsx";
-import SoundButton from "./components/SoundButton.jsx";
 import StartScreen from "./components/StartScreen.jsx";
 
 import modeList from "./data/modeList.js";
@@ -17,9 +15,7 @@ export default function App() {
 
   const [started, setStarted] = useState(false);
 
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const [soundOn, setSoundOn] = useState(false);
+  const [soundOn, setSoundOn] = useState(true);
 
   const [sleepTimer, setSleepTimer] =
     useState(0);
@@ -28,9 +24,6 @@ export default function App() {
     useState(true);
 
   const [showLabel, setShowLabel] =
-    useState(true);
-
-  const [uiVisible, setUiVisible] =
     useState(true);
 
   const currentMode = useMemo(() => {
@@ -49,7 +42,11 @@ export default function App() {
 
     let audio;
 
-    if (soundOn && currentMode?.sound) {
+    if (
+      started &&
+      soundOn &&
+      currentMode?.sound
+    ) {
 
       audio = createModeSound(
         currentMode.sound
@@ -67,11 +64,15 @@ export default function App() {
 
     };
 
-  }, [soundOn, currentMode]);
+  }, [started, soundOn, currentMode]);
 
   useEffect(() => {
 
-    if (!soundOn || sleepTimer === 0) {
+    if (
+      !started ||
+      !soundOn ||
+      sleepTimer === 0
+    ) {
       return;
     }
 
@@ -83,22 +84,13 @@ export default function App() {
 
     return () => clearTimeout(timer);
 
-  }, [soundOn, sleepTimer]);
+  }, [started, soundOn, sleepTimer]);
 
   useEffect(() => {
 
     setVisible(false);
 
     setShowLabel(true);
-
-    if (
-      navigator.vibrate &&
-      started
-    ) {
-
-      navigator.vibrate(10);
-
-    }
 
     const fadeTimer = setTimeout(() => {
 
@@ -122,45 +114,18 @@ export default function App() {
 
   }, [mode]);
 
-  useEffect(() => {
-
-    const hideTimer = setTimeout(() => {
-
-      setUiVisible(false);
-
-    }, 4200);
-
-    return () => clearTimeout(hideTimer);
-
-  }, [uiVisible]);
-
-  function wakeUI() {
-
-    setUiVisible(true);
-
-  }
-
   return (
-    <div
-      className="app"
-      onTouchStart={wakeUI}
-      onMouseMove={wakeUI}
-      onClick={wakeUI}
-      style={{
-        width: "100%",
-        height: "100vh",
-
-        overflow: "hidden",
-
-        position: "relative",
-
-        background: "black",
-      }}
-    >
+    <div className="app">
 
       {!started ? (
 
         <StartScreen
+          mode={mode}
+          setMode={setMode}
+          soundOn={soundOn}
+          setSoundOn={setSoundOn}
+          sleepTimer={sleepTimer}
+          setSleepTimer={setSleepTimer}
           setStarted={setStarted}
         />
 
@@ -197,69 +162,6 @@ export default function App() {
             </div>
 
           </div>
-
-          <div
-            style={{
-              opacity:
-                uiVisible ? 1 : 0.16,
-
-              transition:
-                "opacity 1.8s ease",
-            }}
-          >
-
-            <button
-              onClick={() => setMenuOpen(true)}
-              style={{
-                position: "absolute",
-
-                top: "18px",
-                right: "18px",
-
-                width: "42px",
-                height: "42px",
-
-                borderRadius: "50%",
-
-                border: "none",
-
-                background:
-                  "rgba(255,255,255,0.10)",
-
-                color: "white",
-
-                backdropFilter: "blur(10px)",
-                WebkitBackdropFilter:
-                  "blur(10px)",
-
-                cursor: "pointer",
-
-                zIndex: 50,
-
-                fontSize: "18px",
-              }}
-            >
-              ☰
-            </button>
-
-            <SoundButton
-              soundOn={soundOn}
-              setSoundOn={setSoundOn}
-            />
-
-          </div>
-
-          {menuOpen && (
-
-            <MenuModal
-              mode={mode}
-              setMode={setMode}
-              setMenuOpen={setMenuOpen}
-              sleepTimer={sleepTimer}
-              setSleepTimer={setSleepTimer}
-            />
-
-          )}
 
         </>
 

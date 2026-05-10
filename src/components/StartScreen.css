@@ -1,0 +1,175 @@
+.startScreen {
+  position: relative;
+
+  width: 100%;
+  height: 100vh;
+
+  overflow-y: auto;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #0b1220 0%,
+      #02050b 100%
+    );
+
+  color: white;
+}
+
+.startOverlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(60, 120, 180, 0.08),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+.startInner {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+
+  max-width: 520px;
+
+  margin: 0 auto;
+
+  padding:
+    80px 20px 120px;
+}
+
+.logo {
+  font-size: 42px;
+
+  text-align: center;
+
+  margin-bottom: 10px;
+
+  letter-spacing: 4px;
+}
+
+.subText {
+  text-align: center;
+
+  font-size: 14px;
+
+  color:
+    rgba(255,255,255,0.52);
+
+  margin-bottom: 42px;
+
+  line-height: 1.8;
+}
+
+.modeGrid {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.modeCard {
+  border: none;
+
+  border-radius: 22px;
+
+  padding: 18px;
+
+  background:
+    rgba(255,255,255,0.06);
+
+  color: white;
+
+  text-align: left;
+
+  backdrop-filter: blur(12px);
+
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.modeCard.active {
+  background:
+    rgba(120,180,255,0.16);
+
+  border:
+    1px solid
+    rgba(180,220,255,0.24);
+}
+
+.modeIcon {
+  font-size: 24px;
+
+  margin-bottom: 8px;
+}
+
+.modeName {
+  font-size: 17px;
+
+  margin-bottom: 6px;
+}
+
+.modeDescription {
+  font-size: 13px;
+
+  color:
+    rgba(255,255,255,0.56);
+
+  line-height: 1.7;
+}
+
+.settingArea {
+  margin-top: 28px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.settingButton,
+.timerSelect {
+  width: 100%;
+
+  border: none;
+
+  border-radius: 18px;
+
+  padding: 16px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  color: white;
+
+  font-size: 14px;
+}
+
+.startButton {
+  width: 100%;
+
+  margin-top: 30px;
+
+  border: none;
+
+  border-radius: 999px;
+
+  padding: 18px;
+
+  background:
+    rgba(255,255,255,0.14);
+
+  color: white;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}

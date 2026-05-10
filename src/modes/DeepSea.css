@@ -4,13 +4,13 @@
   height: 100%;
   overflow: hidden;
 
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(20, 80, 120, 0.28) 0%,
-      rgba(8, 24, 42, 0.9) 45%,
-      #020711 100%
-    );
+ background:
+  radial-gradient(
+    circle at center,
+    rgba(36, 110, 160, 0.34) 0%,
+    rgba(10, 30, 52, 0.82) 48%,
+    #040913 100%
+  );
 
   animation:
     deepFloat 18s ease-in-out infinite;
