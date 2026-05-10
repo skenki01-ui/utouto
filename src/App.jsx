@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import "./index.css";
 import "./App.css";
 
-import MenuModal from "./components/MenuModal.jsx";
-import SoundButton from "./components/SoundButton.jsx";
 import StartScreen from "./components/StartScreen.jsx";
 
 import modeList from "./data/modeList.js";
@@ -17,9 +19,6 @@ export default function App() {
     useState("yorugumo");
 
   const [started, setStarted] =
-    useState(false);
-
-  const [menuOpen, setMenuOpen] =
     useState(false);
 
   const [soundOn, setSoundOn] =
@@ -37,6 +36,12 @@ export default function App() {
   const [showLabel, setShowLabel] =
     useState(true);
 
+  const [showUi, setShowUi] =
+    useState(true);
+
+  const [showAdjust, setShowAdjust] =
+    useState(false);
+
   const currentMode = useMemo(() => {
 
     return (
@@ -49,6 +54,8 @@ export default function App() {
 
   const CurrentComponent =
     currentMode.component;
+
+  /* ---------- sound ---------- */
 
   useEffect(() => {
 
@@ -80,6 +87,8 @@ export default function App() {
     };
 
   }, [mode]);
+
+  /* ---------- sleep timer ---------- */
 
   useEffect(() => {
 
@@ -116,6 +125,8 @@ export default function App() {
     audioInstance,
   ]);
 
+  /* ---------- mode label ---------- */
+
   useEffect(() => {
 
     setVisible(false);
@@ -146,8 +157,57 @@ export default function App() {
 
   }, [mode]);
 
+  /* ---------- auto hide ui ---------- */
+
+  useEffect(() => {
+
+    if (!started) return;
+
+    setShowUi(true);
+
+    const timer =
+      setTimeout(() => {
+
+        setShowUi(false);
+
+        setShowAdjust(true);
+
+      }, 4200);
+
+    return () =>
+      clearTimeout(timer);
+
+  }, [started, mode]);
+
+  function wakeUi() {
+
+    setShowUi(true);
+
+    setShowAdjust(false);
+
+    setTimeout(() => {
+
+      setShowUi(false);
+
+      setShowAdjust(true);
+
+    }, 4200);
+
+  }
+
   return (
-    <div className="app">
+    <div
+      className="app"
+      onClick={() => {
+
+        if (started) {
+
+          wakeUi();
+
+        }
+
+      }}
+    >
 
       {!started ? (
 
@@ -224,60 +284,140 @@ export default function App() {
 
           </div>
 
-          <button
-            onClick={() => {
-              setMenuOpen(true);
+          {/* ---------- UI ---------- */}
+
+          <div
+            style={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+
+              display: "flex",
+              gap: "10px",
+
+              opacity:
+                showUi ? 1 : 0,
+
+              transition:
+                "opacity 1.8s ease",
+
+              pointerEvents:
+                showUi
+                  ? "auto"
+                  : "none",
+
+              zIndex: 50,
             }}
-            className="menuButton"
           >
-            ☰
-          </button>
 
-          <SoundButton
-            soundOn={soundOn}
-            setSoundOn={(next) => {
+            <button
+              className="menuButton"
+              onClick={(e) => {
 
-              if (!soundOn) {
+                e.stopPropagation();
 
-                const audio =
-                  createModeSound(
-                    currentMode.sound
-                  );
+                setStarted(false);
 
-                setAudioInstance(audio);
+              }}
+            >
+              ✕
+            </button>
 
-                setSoundOn(true);
+            <button
+              className="menuButton"
+              onClick={(e) => {
 
-              } else {
+                e.stopPropagation();
 
-                if (
-                  audioInstance?.fadeOut
-                ) {
+                if (!soundOn) {
 
-                  audioInstance.fadeOut();
+                  const audio =
+                    createModeSound(
+                      currentMode.sound
+                    );
+
+                  setAudioInstance(audio);
+
+                  setSoundOn(true);
+
+                } else {
+
+                  if (
+                    audioInstance?.fadeOut
+                  ) {
+
+                    audioInstance.fadeOut();
+
+                  }
+
+                  setAudioInstance(null);
+
+                  setSoundOn(false);
 
                 }
 
-                setAudioInstance(null);
+              }}
+            >
+              {soundOn
+                ? "♫"
+                : "◯"}
+            </button>
 
-                setSoundOn(false);
+          </div>
 
-              }
+          {/* ---------- adjust ---------- */}
+
+          <button
+            onClick={(e) => {
+
+              e.stopPropagation();
+
+              setShowUi(true);
+
+              setShowAdjust(false);
 
             }}
-          />
+            style={{
+              position: "absolute",
 
-          {menuOpen && (
+              right: 20,
+              bottom: 28,
 
-            <MenuModal
-              mode={mode}
-              setMode={setMode}
-              setMenuOpen={setMenuOpen}
-              sleepTimer={sleepTimer}
-              setSleepTimer={setSleepTimer}
-            />
+              width: 52,
+              height: 52,
 
-          )}
+              borderRadius: "50%",
+
+              border: "none",
+
+              background:
+                "rgba(255,255,255,0.08)",
+
+              backdropFilter:
+                "blur(12px)",
+
+              color: "white",
+
+              fontSize: "20px",
+
+              opacity:
+                showAdjust
+                  ? 1
+                  : 0,
+
+              transition:
+                "opacity 1.8s ease",
+
+              pointerEvents:
+                showAdjust
+                  ? "auto"
+                  : "none",
+
+              zIndex: 60,
+            }}
+          >
+            ︙
+          </button>
 
         </>
 

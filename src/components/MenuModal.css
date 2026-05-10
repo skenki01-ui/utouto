@@ -1,0 +1,187 @@
+.menuOverlay {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  padding: 18px;
+
+  background:
+    rgba(0,0,0,0.28);
+
+  backdrop-filter: blur(6px);
+
+  z-index: 100;
+}
+
+.menuSheet {
+  width: 100%;
+  max-width: 420px;
+
+  padding: 24px;
+
+  border-radius: 30px;
+
+  background:
+    rgba(12,18,30,0.72);
+
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+
+  box-shadow:
+    0 0 40px rgba(0,0,0,0.34);
+}
+
+.menuTitle {
+  font-size: 18px;
+
+  font-weight: 600;
+
+  margin-bottom: 22px;
+
+  color:
+    rgba(255,255,255,0.92);
+}
+
+.menuSection {
+  margin-bottom: 22px;
+}
+
+.menuLabel {
+  font-size: 12px;
+
+  letter-spacing: 0.08em;
+
+  margin-bottom: 12px;
+
+  color:
+    rgba(255,255,255,0.42);
+}
+
+.modeRow {
+  display: flex;
+
+  gap: 10px;
+
+  overflow-x: auto;
+
+  padding-bottom: 4px;
+}
+
+.modeRow::-webkit-scrollbar {
+  display: none;
+}
+
+.modeMini {
+  min-width: 82px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  padding: 14px 10px;
+
+  background:
+    rgba(255,255,255,0.06);
+
+  color: white;
+
+  backdrop-filter: blur(10px);
+
+  cursor: pointer;
+}
+
+.modeMini.active {
+  background:
+    rgba(120,160,255,0.18);
+}
+
+.modeMiniIcon {
+  font-size: 18px;
+
+  margin-bottom: 8px;
+}
+
+.modeMiniName {
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+.menuButtonLarge {
+  width: 100%;
+
+  height: 52px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  color: white;
+
+  font-size: 15px;
+
+  backdrop-filter: blur(10px);
+
+  cursor: pointer;
+}
+
+.menuSelect {
+  width: 100%;
+
+  height: 52px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  padding: 0 16px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  color: white;
+
+  font-size: 15px;
+
+  outline: none;
+
+  backdrop-filter: blur(10px);
+}
+
+.sleepButton {
+  width: 100%;
+
+  height: 58px;
+
+  border: none;
+
+  border-radius: 999px;
+
+  margin-top: 10px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(180,210,255,0.22),
+      rgba(120,150,220,0.14)
+    );
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  backdrop-filter: blur(14px);
+
+  cursor: pointer;
+}
