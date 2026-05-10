@@ -11,11 +11,14 @@ import createModeSound from "./sounds/createModeSound.js";
 
 export default function App() {
 
-  const [mode, setMode] = useState("deep");
+  const [mode, setMode] =
+    useState("deep");
 
-  const [started, setStarted] = useState(false);
+  const [started, setStarted] =
+    useState(false);
 
-  const [soundOn, setSoundOn] = useState(true);
+  const [soundOn, setSoundOn] =
+    useState(true);
 
   const [sleepTimer, setSleepTimer] =
     useState(0);
@@ -29,8 +32,9 @@ export default function App() {
   const currentMode = useMemo(() => {
 
     return (
-      modeList.find((m) => m.id === mode) ||
-      modeList[0]
+      modeList.find(
+        (m) => m.id === mode
+      ) || modeList[0]
     );
 
   }, [mode]);
@@ -64,7 +68,11 @@ export default function App() {
 
     };
 
-  }, [started, soundOn, currentMode]);
+  }, [
+    started,
+    soundOn,
+    currentMode
+  ]);
 
   useEffect(() => {
 
@@ -82,27 +90,36 @@ export default function App() {
 
     }, sleepTimer);
 
-    return () => clearTimeout(timer);
+    return () =>
+      clearTimeout(timer);
 
-  }, [started, soundOn, sleepTimer]);
+  }, [
+    started,
+    soundOn,
+    sleepTimer
+  ]);
 
   useEffect(() => {
+
+    if (!started) return;
 
     setVisible(false);
 
     setShowLabel(true);
 
-    const fadeTimer = setTimeout(() => {
+    const fadeTimer =
+      setTimeout(() => {
 
-      setVisible(true);
+        setVisible(true);
 
-    }, 220);
+      }, 220);
 
-    const labelTimer = setTimeout(() => {
+    const labelTimer =
+      setTimeout(() => {
 
-      setShowLabel(false);
+        setShowLabel(false);
 
-    }, 2600);
+      }, 2600);
 
     return () => {
 
@@ -112,7 +129,7 @@ export default function App() {
 
     };
 
-  }, [mode]);
+  }, [mode, started]);
 
   return (
     <div className="app">

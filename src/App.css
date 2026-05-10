@@ -41,8 +41,6 @@ button {
   background: #050811;
 }
 
-
-
 /* ---------- MENU BUTTON ---------- */
 
 .menuButton {
@@ -112,8 +110,6 @@ button {
 
   color: white;
 }
-
-/* スクロールバー軽く消す */
 
 .menuModal::-webkit-scrollbar {
   width: 0;
@@ -223,20 +219,20 @@ button {
   overflow: hidden;
 }
 
-/* ---------- MODE FADE ---------- */
+/* ---------- MODE ---------- */
 
 .mode-visible {
-  opacity: 1;
+  width: 100%;
+  height: 100%;
 
-  transition:
-    opacity 0.7s ease;
+  opacity: 1;
 }
 
 .mode-hidden {
-  opacity: 0;
+  width: 100%;
+  height: 100%;
 
-  transition:
-    opacity 0.2s ease;
+  opacity: 1;
 }
 
 /* ---------- MODE LABEL ---------- */
@@ -254,10 +250,6 @@ button {
   text-align: center;
 
   opacity: 1;
-
-  transition:
-    opacity 1.4s ease,
-    transform 1.4s ease;
 }
 
 .mode-label-hidden {
@@ -266,19 +258,13 @@ button {
   left: 50%;
   bottom: 110px;
 
-  transform:
-    translateX(-50%)
-    translateY(12px);
+  transform: translateX(-50%);
 
   z-index: 40;
 
   text-align: center;
 
   opacity: 0;
-
-  transition:
-    opacity 1.8s ease,
-    transform 1.8s ease;
 }
 
 .mode-label-name {
