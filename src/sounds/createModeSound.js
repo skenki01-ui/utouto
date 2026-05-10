@@ -1,22 +1,20 @@
-import rainSound from "./rainSound";
-import snowSound from "./snowSound";
-import takibiSound from "./takibiSound";
-import deepSound from "./deepSound";
-import trainSound from "./trainSound";
-import factorySound from "./factorySound";
+import rainSound from "./rainSound.js";
+import snowSound from "./snowSound.js";
+import factorySound from "./factorySound.js";
+import trainSound from "./trainSound.js";
+import takibiSound from "./takibiSound.js";
+import deepSound from "./deepSound.js";
 
 const soundMap = {
   rain: rainSound,
   snow: snowSound,
+  factory: factorySound,
+  train: trainSound,
   takibi: takibiSound,
   deep: deepSound,
-  train: trainSound,
-  factory: factorySound,
 };
 
-export default function createModeSound(
-  mode
-) {
+export default function createModeSound(mode) {
 
   const AudioContextClass =
     window.AudioContext ||
@@ -24,6 +22,14 @@ export default function createModeSound(
 
   const ctx =
     new AudioContextClass();
+
+  /* iPhone対策 */
+
+  if (ctx.state === "suspended") {
+
+    ctx.resume();
+
+  }
 
   const master =
     ctx.createGain();
@@ -48,11 +54,9 @@ export default function createModeSound(
 
   return {
 
-    fadeOut: () => {
+    ctx,
 
-      master.gain.cancelScheduledValues(
-        ctx.currentTime
-      );
+    fadeOut() {
 
       master.gain.linearRampToValueAtTime(
         0,
@@ -63,7 +67,7 @@ export default function createModeSound(
 
         ctx.close();
 
-      }, 1900);
+      }, 2200);
 
     },
 
