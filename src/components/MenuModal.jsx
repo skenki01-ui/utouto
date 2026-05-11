@@ -6,7 +6,9 @@ export default function MenuModal({
   mode,
   setMode,
   soundOn,
-  setSoundOn,
+  toggleSound,
+  vibrationOn,
+  setVibrationOn,
   sleepTimer,
   setSleepTimer,
   setStarted,
@@ -43,13 +45,36 @@ export default function MenuModal({
             className="menuButtonLarge"
             onClick={() => {
 
-              setSoundOn();
+              toggleSound();
 
             }}
           >
             {soundOn
               ? "音を止める"
               : "音を流す"}
+          </button>
+
+        </div>
+
+        <div className="menuSection">
+
+          <div className="menuLabel">
+            振動
+          </div>
+
+          <button
+            className="menuButtonLarge"
+            onClick={() => {
+
+              setVibrationOn(
+                !vibrationOn
+              );
+
+            }}
+          >
+            {vibrationOn
+              ? "振動を止める"
+              : "振動を流す"}
           </button>
 
         </div>
@@ -112,6 +137,8 @@ export default function MenuModal({
                 onClick={() => {
 
                   setMode(item.id);
+
+                  setMenuOpen(false);
 
                 }}
               >

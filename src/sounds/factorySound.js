@@ -3,21 +3,38 @@ export default function factorySound(
   master
 ) {
 
-  const osc =
+  const osc1 =
     ctx.createOscillator();
 
-  osc.type = "sine";
+  osc1.type = "sawtooth";
 
-  osc.frequency.value = 58;
+  osc1.frequency.value = 92;
 
-  const gain = ctx.createGain();
+  const osc2 =
+    ctx.createOscillator();
 
-  gain.gain.value = 0.012;
+  osc2.type = "sine";
 
-  osc.connect(gain);
+  osc2.frequency.value = 138;
+
+  const gain =
+    ctx.createGain();
+
+  gain.gain.value = 0.022;
+
+  osc1.connect(gain);
+  osc2.connect(gain);
 
   gain.connect(master);
 
-  osc.start();
+  osc1.start();
+  osc2.start();
+
+  return () => {
+
+    osc1.stop();
+    osc2.stop();
+
+  };
 
 }

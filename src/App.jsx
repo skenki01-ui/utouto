@@ -28,6 +28,9 @@ export default function App() {
   const [soundOn, setSoundOn] =
     useState(false);
 
+  const [vibrationOn, setVibrationOn] =
+    useState(false);
+
   const [audioInstance, setAudioInstance] =
     useState(null);
 
@@ -44,6 +47,9 @@ export default function App() {
     useState(true);
 
   const [sleepScreen, setSleepScreen] =
+    useState(false);
+
+  const [idleSleep, setIdleSleep] =
     useState(false);
 
   const currentMode = useMemo(() => {
@@ -101,6 +107,41 @@ export default function App() {
     }
 
   }
+
+  /* ---------- vibration ---------- */
+
+  useEffect(() => {
+
+    if (
+      !started ||
+      !vibrationOn
+    ) {
+      return;
+    }
+
+    if (!navigator.vibrate) {
+      return;
+    }
+
+    const interval =
+      setInterval(() => {
+
+        navigator.vibrate(10);
+
+      }, 22000);
+
+    return () => {
+
+      clearInterval(interval);
+
+      navigator.vibrate(0);
+
+    };
+
+  }, [
+    started,
+    vibrationOn,
+  ]);
 
   /* ---------- mode ---------- */
 
@@ -160,7 +201,7 @@ export default function App() {
     audioInstance,
   ]);
 
-  /* ---------- label ---------- */
+  /* ---------- mode label ---------- */
 
   useEffect(() => {
 
@@ -229,6 +270,58 @@ export default function App() {
       clearTimeout(timer);
 
   }
+
+  /* ---------- idle sleep ---------- */
+
+  useEffect(() => {
+
+    if (!started) return;
+
+    let timer;
+
+    function resetIdle() {
+
+      clearTimeout(timer);
+
+      timer = setTimeout(() => {
+
+        stopAudio();
+
+        setIdleSleep(true);
+
+      }, 1000 * 60 * 60);
+
+    }
+
+    resetIdle();
+
+    window.addEventListener(
+      "touchstart",
+      resetIdle
+    );
+
+    window.addEventListener(
+      "mousemove",
+      resetIdle
+    );
+
+    return () => {
+
+      clearTimeout(timer);
+
+      window.removeEventListener(
+        "touchstart",
+        resetIdle
+      );
+
+      window.removeEventListener(
+        "mousemove",
+        resetIdle
+      );
+
+    };
+
+  }, [started]);
 
   /* ---------- sleep ---------- */
 
@@ -354,23 +447,23 @@ export default function App() {
           </div>
 
           {/* ---------- menu ---------- */}
+{menuOpen && (
 
-          {menuOpen && (
+  <MenuModal
+    mode={mode}
+    setMode={setMode}
+    soundOn={soundOn}
+    toggleSound={toggleSound}
+    vibrationOn={vibrationOn}
+    setVibrationOn={setVibrationOn}
+    sleepTimer={sleepTimer}
+    setSleepTimer={setSleepTimer}
+    setStarted={setStarted}
+    setMenuOpen={setMenuOpen}
+    sleepNow={sleepNow}
+  />
 
-            <MenuModal
-              mode={mode}
-              setMode={setMode}
-              soundOn={soundOn}
-              setSoundOn={toggleSound}
-              sleepTimer={sleepTimer}
-              setSleepTimer={setSleepTimer}
-              setStarted={setStarted}
-              setMenuOpen={setMenuOpen}
-              sleepNow={sleepNow}
-            />
-
-          )}
-
+)}
           {/* ---------- sleep ---------- */}
 
           {sleepScreen && (
@@ -398,6 +491,37 @@ export default function App() {
 
                 animation:
                   "sleepFade 1.8s ease",
+              }}
+            >
+              おやすみ
+            </div>
+
+          )}
+
+          {/* ---------- idle sleep ---------- */}
+
+          {idleSleep && (
+
+            <div
+              style={{
+                position: "absolute",
+
+                inset: 0,
+
+                background: "black",
+
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+
+                color:
+                  "rgba(255,255,255,0.58)",
+
+                fontSize: "20px",
+
+                letterSpacing: "0.12em",
+
+                zIndex: 220,
               }}
             >
               おやすみ

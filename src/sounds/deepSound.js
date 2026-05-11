@@ -1,4 +1,7 @@
-export default function deepSound(ctx, master) {
+export default function deepSound(
+  ctx,
+  master
+) {
 
   const osc1 =
     ctx.createOscillator();
@@ -10,14 +13,14 @@ export default function deepSound(ctx, master) {
   const osc2 =
     ctx.createOscillator();
 
-  osc2.type = "sine";
+  osc2.type = "triangle";
 
-  osc2.frequency.value = 123;
+  osc2.frequency.value = 146;
 
   const gain =
     ctx.createGain();
 
-  gain.gain.value = 0.028;
+  gain.gain.value = 0.045;
 
   osc1.connect(gain);
   osc2.connect(gain);
